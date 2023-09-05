@@ -1,0 +1,29 @@
+--// This script will open a new window with a text box and a button.
+--// When the player enters a name and clicks the button, they will be teleported to the player with that name.
+local function openTeleportWindow()
+    local window = Instance.new("ScreenGui")
+    window.Name = "TeleportWindow"
+    window.Parent = game.CoreGui
+    local frame = Instance.new("Frame")
+    frame.Name = "Frame"
+    frame.Parent = window
+    local textBox = Instance.new("TextBox")
+    textBox.Name = "TextBox"
+    textBox.Parent = frame
+    textBox.Size = UDim2.new(0.5, 0, 0.5, 0)
+    textBox.PlaceholderText = "Enter a player name"
+    local button = Instance.new("TextButton")
+    button.Name = "Button"
+    button.Parent = frame
+    button.Size = UDim2.new(0.5, 0, 0.5, 0)
+    button.Text = "Teleport"
+    button.MouseButton1Click:Connect(function()
+        local playerName = textBox.Text
+        local player = game.Players:FindFirstChild(playerName)
+        if player then
+            local localPlayer = game.Players.LocalPlayer
+            localPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+        end
+    end)
+end
+game:GetService("RunService").RenderStepped:Connect(openTeleportWindow)
